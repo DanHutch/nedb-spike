@@ -12,6 +12,25 @@ export default {
   name: 'app',
   components: {
     HelloWorld
+  },
+  created() {
+
+    var doug = {
+      name: 'Douglas Adams',
+      age: 60
+    }
+    var jason = {
+      name: "Jason Object",
+      age: 21
+    }
+    var people = [doug, jason]
+    this.$db.users.insert(people, function(err, docs) {
+      docs.forEach((doc) => {
+        console.log('Inserted', doc.name, 'with ID', doc._id);
+      });
+    })
+    console.log(this.$db);
+
   }
 }
 </script>

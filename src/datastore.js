@@ -11,7 +11,7 @@ export default {
   users: new Datastore(
     { filename: path.join(userData, '/users.db'), autoload: true }
   ),
-  message: new Datastore(
+  messages: new Datastore(
     { filename: path.join(userData, '/messages.db'), autoload: true }
   )
 }

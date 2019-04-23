@@ -1,19 +1,34 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <button id="only-button" @click="findEntry()">CLICK ME, PLEASE!</button>
-  </div>
+  <v-app>
+    <v-toolbar app>
+      <v-toolbar-title class="headline text-uppercase">
+        <span>Vuetify</span>
+        <span class="font-weight-light">MATERIAL DESIGN</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn flat href="https://github.com/vuetifyjs/vuetify/releases/latest" target="_blank">
+        <span class="mr-2">Latest Release</span>
+      </v-btn>
+    </v-toolbar>
+
+    <v-content>
+      <HelloWorld :people="people"/>
+    </v-content>
+    <!-- {{people}} -->
+  </v-app>
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
-
 export default {
   name: "app",
   components: {
     HelloWorld
   },
+  data: () => ({
+    people: [],
+    messages: []
+  }),
   created() {
     var doug = {
       name: "Douglas Adams",
@@ -31,11 +46,9 @@ export default {
       title: "Buenas tardes!",
       text: "So long, Vue! It's been real, yo. Sincerely, NeDB"
     };
-
-    var people = [doug, jason];
+    var folks = [doug, jason];
     var messages = [hello, goodbye];
-
-    this.$db.users.insert(people, function(err, docs) {
+    this.$db.users.insert(folks, function(err, docs) {
       docs.forEach(doc => {
         console.log("Inserted", doc.name, "with ID", doc._id);
       });
@@ -45,12 +58,17 @@ export default {
         console.log("Inserted", doc.title, "with ID", doc._id);
       });
     });
-
     console.log(this.$db);
-
-    // this.$db.users.findOne({ name: "Jason" }, function(err, doc) {
-    //   console.log(err);
-    // });
+  },
+  mounted() {
+    var that = this;
+    this.$db.users.find({}, function(err, docs) {
+      that.people = docs
+      // console.log(docs)
+      // docs.forEach(doc => {
+      //   people.push(doc);
+      // });
+    });
   },
   methods: {
     findEntry() {

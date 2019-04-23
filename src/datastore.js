@@ -1,5 +1,4 @@
 
-import Vue from 'vue'
 import Datastore from 'nedb'
 import path from 'path'
 import { remote } from 'electron'
